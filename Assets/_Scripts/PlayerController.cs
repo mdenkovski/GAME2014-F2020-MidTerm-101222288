@@ -64,7 +64,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
-        { 
+        {
+            
             //update our internal orientation to landcape
             if (m_screenOrientation != ScreenOrientation.LandscapeLeft && m_screenOrientation != ScreenOrientation.LandscapeRight)
             {
@@ -79,9 +80,11 @@ public class PlayerController : MonoBehaviour
             _Move();
             _CheckBounds();
             _FireBullet();
+
         }
         if(Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
         {
+            
             //update our internal orientation to portrait
             if (m_screenOrientation != ScreenOrientation.Portrait && m_screenOrientation  != ScreenOrientation.PortraitUpsideDown)
             {
@@ -96,6 +99,7 @@ public class PlayerController : MonoBehaviour
             _MoveHorizontal();
             _CheckBoundsHorizontal();
             _FireBullet();
+
         }
         Debug.Log(Screen.orientation);
 
@@ -106,16 +110,18 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void _SetLandscapePosition()
     {
-        //transform.position = new Vector2(-7.44f, 0.0f);
-        //transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+        m_rigidBody.velocity = new Vector2(0.0f, 0.0f);
+        m_touchesEnded = new Vector3();
         transform.SetPositionAndRotation(new Vector2(-7.44f, 0.0f), Quaternion.Euler(0.0f, 0.0f, -90.0f));
+        m_bOrientationChanged = false;
     }
 
     private void _SetPortraitPosition()
     {
-        //transform.position = new Vector2(0.0f, -4.0f); 
-        Quaternion.Euler(0.0f, 0.0f, 90.0f);
+        m_rigidBody.velocity = new Vector2(0.0f, 0.0f);
+        m_touchesEnded = new Vector3();
         transform.SetPositionAndRotation(new Vector2(0.0f, -4.0f), Quaternion.Euler(0.0f, 0.0f, 0.0f));
+        m_bOrientationChanged = false;
     }
 
     private void _FireBullet()

@@ -43,6 +43,8 @@ public class BulletController : MonoBehaviour, IApplyDamage
 
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
         {
+            _MoveHorizontal();
+            _CheckBoundsHorizontal();
             //update our internal orientation to landcape
             if (m_screenOrientation != ScreenOrientation.LandscapeLeft && m_screenOrientation != ScreenOrientation.LandscapeRight)
             {
@@ -54,11 +56,13 @@ public class BulletController : MonoBehaviour, IApplyDamage
                 //return the bullet if orientation changed
                 bulletManager.ReturnBullet(gameObject);
             }
-            _MoveHorizontal();
-            _CheckBoundsHorizontal();
+            m_bOrientationChanged = false;
+            
         }
         if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
         {
+            _MoveVertical();
+            _CheckBoundsVertical();
             //update our internal orientation to portrait
             if (m_screenOrientation != ScreenOrientation.Portrait && m_screenOrientation != ScreenOrientation.PortraitUpsideDown)
             {
@@ -70,8 +74,8 @@ public class BulletController : MonoBehaviour, IApplyDamage
                 //return the bullet if orientation changed
                 bulletManager.ReturnBullet(gameObject);
             }
-            _MoveVertical();
-            _CheckBoundsVertical();
+            m_bOrientationChanged = false;
+            
         }
         
 
