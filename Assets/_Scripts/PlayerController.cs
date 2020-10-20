@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //sett x to 0 and y value based on direction and speed
+            //set x to 0 and y value based on direction and speed
             Vector2 newVelocity = m_rigidBody.velocity + new Vector2(0.0f, direction * verticalSpeed);
             m_rigidBody.velocity = Vector2.ClampMagnitude(newVelocity, maxSpeed);
             m_rigidBody.velocity *= 0.99f;
@@ -124,12 +124,14 @@ public class PlayerController : MonoBehaviour
         // check top bounds
         if (transform.position.y >= verticalBoundary)
         {
+            //move the player in bounds based on vertical boundary
             transform.position = new Vector3(transform.position.x, verticalBoundary, 0.0f);
         }
 
         // check bottom bounds
         if (transform.position.y <= -verticalBoundary)
         {
+            //move the player in bounds based on vertical boundary
             transform.position = new Vector3(transform.position.x, -verticalBoundary, 0.0f);
         }
 
