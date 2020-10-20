@@ -9,6 +9,8 @@ using UnityEngine;
 /// GAME 2014 Mobile Game Dev
 /// Last Modified Oct 20
 /// - changed variable names to reflect horizontal movement orientation in landscape
+/// - move along x axis instead of y
+/// -check horizontal boundaries
 /// </summary>
 public class BulletController : MonoBehaviour, IApplyDamage
 {

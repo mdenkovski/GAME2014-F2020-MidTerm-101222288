@@ -8,6 +8,8 @@ using UnityEngine;
 /// GAME 2014 Mobile Game Dev
 /// Last Modified Oct 20
 /// - changed variable names to reflect horizontal movement orientation in landscape
+/// -chanegd functions to move along x axis instead of y
+/// -check horizontal position
 /// </summary>
 public class BackgroundController : MonoBehaviour
 {
