@@ -11,6 +11,7 @@ using UnityEngine;
 /// Last Modified Oct 20
 /// - changed variable names to reflect vertical movement orientation in landscape
 /// - adjusted functions to change from x axis to y axis movement (horizontal to vertical)
+/// - added responsiveness to different layouts
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -120,9 +121,16 @@ public class PlayerController : MonoBehaviour
     private void _FireBullet()
     {
         // delay bullet firing 
-        if(Time.frameCount % 60 == 0 && bulletManager.HasBullets())
+        if (Time.frameCount % 60 == 0 && bulletManager.HasBullets())
         {
-            bulletManager.GetBullet(transform.position);
+            if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
+            {
+                bulletManager.GetBullet(transform.position, Quaternion.Euler(0.0f, 0.0f, -90.0f));
+            }
+            if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+            {
+                bulletManager.GetBullet(transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f) );
+            }
         }
     }
 

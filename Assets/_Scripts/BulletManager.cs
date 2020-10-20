@@ -1,7 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
+/// <summary>
+/// BulletManager.cs
+/// Michael Denkovski 101222288
+/// GAME 2014 Mobile Game Dev
+/// Last Modified Oct 20
+/// - get bullet now takes in a rotation to be able to specify rotation
+/// </summary>
 [System.Serializable]
 public class BulletManager : MonoBehaviour
 {
@@ -29,11 +37,17 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    public GameObject GetBullet(Vector3 position)
+    /// <summary>
+    /// get the bbullet and 
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
+    public GameObject GetBullet(Vector3 position, Quaternion rotation = new Quaternion())
     {
         var newBullet = m_bulletPool.Dequeue();
         newBullet.SetActive(true);
-        newBullet.transform.position = position;
+        newBullet.transform.SetPositionAndRotation(position, rotation);
         return newBullet;
     }
 
