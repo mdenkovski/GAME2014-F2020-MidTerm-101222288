@@ -4,17 +4,31 @@ using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// PlayerController.cs
+/// Michael Denkovski 101222288
+/// GAME 2014 Mobile Game Dev
+/// Last Modified Oct 20
+/// - changed variable names to reflect vertical movement orientation in landscape
+/// - adjusted functions to change from x axis to y axis movement (horizontal to vertical)
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     public BulletManager bulletManager;
 
+    /// <summary>
+    /// how far up or down the player can go
+    /// </summary>
     [Header("Boundary Check")]
-    public float horizontalBoundary;
+    public float verticalBoundary;
 
+    /// <summary>
+    /// the speed at which the player can move
+    /// </summary>
     [Header("Player Speed")]
-    public float horizontalSpeed;
+    public float verticalSpeed;
     public float maxSpeed;
-    public float horizontalTValue;
+    public float verticalTValue;
 
     [Header("Bullet Firing")]
     public float fireDelay;
@@ -47,6 +61,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// move the player along the y axis up or down
+    /// </summary>
     private void _Move()
     {
         float direction = 0.0f;
@@ -56,13 +73,13 @@ public class PlayerController : MonoBehaviour
         {
             var worldTouch = Camera.main.ScreenToWorldPoint(touch.position);
 
-            if (worldTouch.x > transform.position.x)
+            if (worldTouch.y > transform.position.y)
             {
                 // direction is positive
                 direction = 1.0f;
             }
 
-            if (worldTouch.x < transform.position.x)
+            if (worldTouch.y < transform.position.y)
             {
                 // direction is negative
                 direction = -1.0f;
@@ -71,44 +88,49 @@ public class PlayerController : MonoBehaviour
             m_touchesEnded = worldTouch;
 
         }
-
+        //use the vertical axis for the movememnt
         // keyboard support
-        if (Input.GetAxis("Horizontal") >= 0.1f) 
+        if (Input.GetAxis("Vertical") >= 0.1f) 
         {
             // direction is positive
             direction = 1.0f;
         }
-
-        if (Input.GetAxis("Horizontal") <= -0.1f)
+        //use the vertical axis for the movememnt
+        if (Input.GetAxis("Vertical") <= -0.1f)
         {
             // direction is negative
             direction = -1.0f;
         }
 
-        if (m_touchesEnded.x != 0.0f)
+        if (m_touchesEnded.y != 0.0f)
         {
-           transform.position = new Vector2(Mathf.Lerp(transform.position.x, m_touchesEnded.x, horizontalTValue), transform.position.y);
+            //move the player along the y axis
+           transform.position = new Vector2(transform.position.x, Mathf.Lerp(transform.position.y, m_touchesEnded.y, verticalTValue));
         }
         else
         {
-            Vector2 newVelocity = m_rigidBody.velocity + new Vector2(direction * horizontalSpeed, 0.0f);
+            //sett x to 0 and y value based on direction and speed
+            Vector2 newVelocity = m_rigidBody.velocity + new Vector2(0.0f, direction * verticalSpeed);
             m_rigidBody.velocity = Vector2.ClampMagnitude(newVelocity, maxSpeed);
             m_rigidBody.velocity *= 0.99f;
         }
     }
 
+    /// <summary>
+    /// check the vertical bounds of the ship to make sure it is within
+    /// </summary>
     private void _CheckBounds()
     {
-        // check right bounds
-        if (transform.position.x >= horizontalBoundary)
+        // check top bounds
+        if (transform.position.y >= verticalBoundary)
         {
-            transform.position = new Vector3(horizontalBoundary, transform.position.y, 0.0f);
+            transform.position = new Vector3(transform.position.x, verticalBoundary, 0.0f);
         }
 
-        // check left bounds
-        if (transform.position.x <= -horizontalBoundary)
+        // check bottom bounds
+        if (transform.position.y <= -verticalBoundary)
         {
-            transform.position = new Vector3(-horizontalBoundary, transform.position.y, 0.0f);
+            transform.position = new Vector3(transform.position.x, -verticalBoundary, 0.0f);
         }
 
     }
