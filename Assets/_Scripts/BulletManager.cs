@@ -32,7 +32,7 @@ public class BulletManager : MonoBehaviour
 
         for (int count = 0; count < MaxBullets; count++)
         {
-            var tempBullet = bulletFactory.createBullet(BulletType.REGULAR);
+            var tempBullet = bulletFactory.createBullet();
             m_bulletPool.Enqueue(tempBullet);
         }
     }
