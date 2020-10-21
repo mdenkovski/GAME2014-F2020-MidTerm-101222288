@@ -119,6 +119,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalSpeed: 5
   verticalBoundary: 4.7
+  horizontalSpeed: 3
+  horizontalBoundary: 2.4
   direction: 1
 --- !u!61 &5207501529346661145
 BoxCollider2D:

@@ -26,7 +26,7 @@ public class BulletController : MonoBehaviour, IApplyDamage
     /// <summary>
     /// private variables
     /// </summary>
-    private bool m_bOrientationChanged;
+    public bool m_bOrientationChanged;
     ScreenOrientation m_screenOrientation;
 
     // Start is called before the first frame update
@@ -43,41 +43,32 @@ public class BulletController : MonoBehaviour, IApplyDamage
 
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
         {
-            _MoveHorizontal();
-            _CheckBoundsHorizontal();
+            
             //update our internal orientation to landcape
             if (m_screenOrientation != ScreenOrientation.LandscapeLeft && m_screenOrientation != ScreenOrientation.LandscapeRight)
             {
                 m_screenOrientation = Screen.orientation;
                 m_bOrientationChanged = true;
             }
-            if (m_bOrientationChanged)
-            {
-                //return the bullet if orientation changed
-                bulletManager.ReturnBullet(gameObject);
-            }
-            m_bOrientationChanged = false;
-            
+
+            _MoveHorizontal();
+            _CheckBoundsHorizontal();
+
         }
         if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
         {
-            _MoveVertical();
-            _CheckBoundsVertical();
+            
             //update our internal orientation to portrait
             if (m_screenOrientation != ScreenOrientation.Portrait && m_screenOrientation != ScreenOrientation.PortraitUpsideDown)
             {
                 m_screenOrientation = Screen.orientation;
                 m_bOrientationChanged = true;
             }
-            if (m_bOrientationChanged)
-            {
-                //return the bullet if orientation changed
-                bulletManager.ReturnBullet(gameObject);
-            }
-            m_bOrientationChanged = false;
             
+            _MoveVertical();
+            _CheckBoundsVertical();
         }
-        
+        //_CheckValidOrientation(); //not working correctly
 
     }
 
@@ -105,6 +96,7 @@ public class BulletController : MonoBehaviour, IApplyDamage
         if (transform.position.x > horizontalBoundary)
         {
             bulletManager.ReturnBullet(gameObject);
+            //Debug.Log("despawning bullet");
         }
     }
 
@@ -116,14 +108,24 @@ public class BulletController : MonoBehaviour, IApplyDamage
         if (transform.position.y > verticalBoundary)
         {
             bulletManager.ReturnBullet(gameObject);
+            //Debug.Log("despawning bullet");
         }
     }
 
+    private void _CheckValidOrientation()
+    {
+        if (m_bOrientationChanged)
+        {
+            m_bOrientationChanged = false;
+            bulletManager.ReturnBullet(gameObject);
+        }
+    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log(other.gameObject.name);
         bulletManager.ReturnBullet(gameObject);
+        //Debug.Log("despawning bullet");
     }
 
     public int ApplyDamage()

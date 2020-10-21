@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
             {
                 m_screenOrientation = Screen.orientation;
                 m_bOrientationChanged = true;
-                Debug.Log("orientation changed");
+                //Debug.Log("orientation changed");
             }
             if (m_bOrientationChanged)
             {
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             {
                 m_screenOrientation = Screen.orientation;
                 m_bOrientationChanged = true;
-                Debug.Log("orientation changed");
+                //Debug.Log("orientation changed");
             }
             if (m_bOrientationChanged)
             {
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
             _FireBullet();
 
         }
-        Debug.Log(Screen.orientation);
+        //Debug.Log(Screen.orientation);
 
     }
 
@@ -127,15 +127,19 @@ public class PlayerController : MonoBehaviour
     private void _FireBullet()
     {
         // delay bullet firing 
-        if (Time.frameCount % 60 == 0 && bulletManager.HasBullets())
+        if (Time.frameCount % fireDelay == 0 && bulletManager.HasBullets())
         {
             if (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
             {
-                bulletManager.GetBullet(transform.position, Quaternion.Euler(0.0f, 0.0f, -90.0f));
+                GameObject bullet = bulletManager.GetBullet(transform.position);
+                bullet.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);
+               // Debug.Log("spawning bullet landscape");
             }
-            if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+            else
             {
-                bulletManager.GetBullet(transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f) );
+                GameObject bullet = bulletManager.GetBullet(transform.position);
+                bullet.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                //Debug.Log("spawning bullet portrait");
             }
         }
     }

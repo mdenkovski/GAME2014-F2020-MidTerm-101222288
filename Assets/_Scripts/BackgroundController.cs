@@ -10,6 +10,7 @@ using UnityEngine;
 /// - changed variable names to reflect horizontal movement orientation in landscape
 /// -chanegd functions to move along x axis instead of y
 /// -check horizontal position
+/// -update orientation and position based on layout
 /// </summary>
 public class BackgroundController : MonoBehaviour
 {
@@ -95,7 +96,7 @@ public class BackgroundController : MonoBehaviour
     private void _MoveHorizontal()
     {
         transform.position -= new Vector3(horizontalSpeed, 0.0f) * Time.deltaTime;
-        Debug.Log("moving left");
+        //Debug.Log("moving left");
     }
 
     /// <summary>
@@ -104,7 +105,7 @@ public class BackgroundController : MonoBehaviour
     private void _MoveVertical()
     {
         transform.position -= new Vector3(0.0f, verticalSpeed) * Time.deltaTime;
-        Debug.Log("moving down");
+        //Debug.Log("moving down");
     }
 
     /// <summary>

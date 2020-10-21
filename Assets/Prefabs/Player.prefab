@@ -126,7 +126,7 @@ MonoBehaviour:
   verticalTValue: 0.05
   horizontalSpeed: 0
   horizontalTValue: 0.05
-  fireDelay: 0.2
+  fireDelay: 30
 --- !u!95 &786270582
 Animator:
   serializedVersion: 3

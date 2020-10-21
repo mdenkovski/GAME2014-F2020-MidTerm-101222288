@@ -32,22 +32,21 @@ public class BulletManager : MonoBehaviour
 
         for (int count = 0; count < MaxBullets; count++)
         {
-            var tempBullet = bulletFactory.createBullet();
+            var tempBullet = bulletFactory.createBullet(BulletType.REGULAR);
             m_bulletPool.Enqueue(tempBullet);
         }
     }
 
     /// <summary>
-    /// get the bbullet and 
+    /// get the bbullet and return it
     /// </summary>
     /// <param name="position"></param>
-    /// <param name="rotation"></param>
     /// <returns></returns>
-    public GameObject GetBullet(Vector3 position, Quaternion rotation = new Quaternion())
+    public GameObject GetBullet(Vector3 position)
     {
         var newBullet = m_bulletPool.Dequeue();
         newBullet.SetActive(true);
-        newBullet.transform.SetPositionAndRotation(position, rotation);
+        newBullet.transform.position = position;
         return newBullet;
     }
 
@@ -59,6 +58,7 @@ public class BulletManager : MonoBehaviour
     public void ReturnBullet(GameObject returnedBullet)
     {
         returnedBullet.SetActive(false);
+        returnedBullet.transform.position = new Vector3();
         m_bulletPool.Enqueue(returnedBullet);
     }
 }
